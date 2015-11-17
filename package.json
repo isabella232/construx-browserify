@@ -1,6 +1,6 @@
 {
   "name": "construx-browserify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Browserify compiler plugin for construx",
   "main": "index.js",
   "scripts": {

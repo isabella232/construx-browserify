@@ -2,7 +2,7 @@
 
 Lead Maintainer: @lmarkus
 
-[![Build Status](https://travis-ci.org/krakenjs/construx-browserify.svg?branch=master)](https://travis-ci.org/krakenjs/construx-browserify)
+[![Build Status](https://travis-ci.org/lmarkus/construx-browserify.svg?branch=master)](https://travis-ci.org/lmarkus/construx-browserify)
 [![NPM version](https://badge.fury.io/js/construx-browserify.png)](http://badge.fury.io/js/construx-browserify)
 
 [construx](https://github.com/krakenjs/construx) plugin for JIT-compiling javascript browserified resources during development of [express](http://expressjs.com/) applications.
