@@ -19,34 +19,48 @@
 
 'use strict';
 
-var test = require('tap').test,
+var fs = require('fs'),
     path = require('path'),
-    Star = require(path.resolve(__dirname, '..')),
-    star = Star({}),
-    fs = require('fs');
+    test = require('tap').test,
+    context = {
+        name: '/js/app',
+        srcRoot: path.resolve(__dirname, 'fixtures/'),
+        ext: 'js'
+    },
+    ConstruxBrowserify = require(path.resolve(__dirname, '..'));
 
-test('construx-star', function (t) {
+test('construx-browserify', function (t) {
 
-    t.test('processes a good star file', function (t) {
+    /**
+     * Makes sure that js resources are actually bundled.
+     */
+    t.test('Correctly bundles javascript files', function (t) {
         t.plan(1);
-        //get good star file
-        fs.readFile(path.resolve(__dirname, 'star/good.star'), function (err, data) {
-            star(data, {paths: '', context: {name: 'good.star.compiled'}}, function (err, compiled) {
-                t.equal('star', compiled);
+
+        //Retrieve app entry point
+        fs.readFile(path.resolve(__dirname, 'fixtures/js/app.js'), function (err, data) {
+            var construxBrowserify = ConstruxBrowserify({});
+            construxBrowserify(data, {paths: '', context: context}, function (err, compiled) {
+                var app = eval(compiled)(1); //Eval entry point (app.js)
+                t.equal(app(), 'foobar');
                 t.end();
             });
-
         });
-
     });
 
 
-    t.test('processes a bad star file', function (t) {
+    /**
+     * Makes sure that the wrapper correctly passes the browserify config object
+     */
+    t.test('Correctly handles browserify options', function (t) {
         t.plan(1);
-        //get bad star file
-        fs.readFile(path.resolve(__dirname, 'star/bad.star'), function (err, data) {
-            star(data, {paths: '', context: {name: 'bad.star.compiled'}}, function (err, compiled) {
-                t.ok(err.name === 'Error');
+
+        fs.readFile(path.resolve(__dirname, 'fixtures/js/app.js'), function (err, data) {
+
+            var construxBrowserify = ConstruxBrowserify({debug: true}); //Append sourcemap as a test option.
+
+            construxBrowserify(data, {paths: '', context: context}, function (err, compiled) {
+                t.ok(~compiled.indexOf('sourceMappingURL')); //Make sure sourcemap is in place
                 t.end();
             });
         });

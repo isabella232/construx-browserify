@@ -16,12 +16,12 @@
  │   limitations under the License.                                            │
  \*───────────────────────────────────────────────────────────────────────────*/
 'use strict';
-
+var path = require('path'),
+    browserify = require('browserify');
 
 module.exports = function (options) {
 
-    options.ext = options.ext || 'star';
-    options.dumpLineNumbers = 'comments';
+    options.ext = options.ext || 'js';
 
     /**
      * Middleware that will process the request.
@@ -31,16 +31,13 @@ module.exports = function (options) {
      * @returns function (err, result): A callback that will take the compiled file.
      */
     return function compiler(raw, config, callback) {
-        var star = raw.toString('utf8');
-        var paths = config.paths;
-        var name = config.context.name;
 
-        if (star === 'good') {
-            callback(null, 'star');
-        } else {
-            callback(new Error('Bad star file'));
-        }
+        var ctx = config.context,
+            b = browserify(path.join(ctx.srcRoot, ctx.name + '.' + ctx.ext), options);
 
+        //TODO: Consider streaming instead of buffering, for performance.
+        b.bundle(function (err, bundle) {
+            callback(err, bundle.toString('utf-8'));
+        });
     };
-
 };
