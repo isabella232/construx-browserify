@@ -17,7 +17,7 @@
  \*───────────────────────────────────────────────────────────────────────────*/
 'use strict';
 var path = require('path'),
-    browserify = require('browserify');
+  browserify = require('browserify');
 
 module.exports = function (options) {
 
@@ -32,12 +32,23 @@ module.exports = function (options) {
      */
     return function compiler(raw, config, callback) {
 
-        var ctx = config.context,
-            b = browserify(path.join(ctx.srcRoot, ctx.name + '.' + ctx.ext), options);
+        var ctx = config.context;
+        var src = path.join(ctx.srcRoot, ctx.name + '.' + ctx.ext);
+        var bOptions = options;
+        if (options.bundles) {
+            if (!options.bundles.hasOwnProperty(config.context.filePath)) {
+                return callback(new Error('construx-browserify doesn\'t know how to process ' + config.context.filePath));
+            }
+            var opts = options.bundles[config.context.filePath];
+            src = opts.src;
+            bOptions = opts.options || {};
+        }
 
-        //TODO: Consider streaming instead of buffering, for performance.
-        b.bundle(function (err, bundle) {
-            callback(err, bundle.toString('utf-8'));
+        browserify(src, bOptions).bundle(function (err, buffer) {
+            if (err) {
+                return callback(err);
+            }
+            callback(null, buffer.toString());
         });
     };
 };

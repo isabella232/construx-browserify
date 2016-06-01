@@ -19,6 +19,7 @@
     "browserify"
   ],
   "author": "@lennyMarkus",
+  "contributors": ["Matt Edelman <mattedelman@gmail.com>"],
   "license": [
     {
       "type": "Apache 2.0",
