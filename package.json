@@ -1,6 +1,6 @@
 {
   "name": "construx-browserify",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Browserify compiler plugin for construx",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,9 @@
     "browserify"
   ],
   "author": "@lennyMarkus",
-  "contributors": ["Matt Edelman <mattedelman@gmail.com>"],
+  "contributors": [
+    "Matt Edelman <mattedelman@gmail.com>"
+  ],
   "license": [
     {
       "type": "Apache 2.0",
