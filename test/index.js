@@ -25,6 +25,7 @@ var fs = require('fs'),
     context = {
         name: '/js/app',
         srcRoot: path.resolve(__dirname, 'fixtures/'),
+        filePath: '/js/app.js',
         ext: 'js'
     },
     ConstruxBrowserify = require(path.resolve(__dirname, '..'));
@@ -61,6 +62,30 @@ test('construx-browserify', function (t) {
 
             construxBrowserify(data, {paths: '', context: context}, function (err, compiled) {
                 t.ok(~compiled.indexOf('sourceMappingURL')); //Make sure sourcemap is in place
+                t.end();
+            });
+        });
+    });
+
+    /**
+     * Makes sure that the wrapper correctly uses the "bundles" map
+     */
+    t.test('Correctly handles "bundles" config map', function (t) {
+        t.plan(1);
+
+        fs.readFile(path.resolve(__dirname, 'fixtures/js/app.js'), function (err, data) {
+            var options = {
+                bundles: {
+                    '/js/app.js': {
+                        src: path.resolve(__dirname, 'fixtures/js/app.js')
+                    }
+                }
+            };
+            var construxBrowserify = ConstruxBrowserify(options); //Append sourcemap as a test option.
+
+            construxBrowserify(data, {paths: '', context: context}, function (err, compiled) {
+                var app = eval(compiled)(1); //Eval entry point (app.js)
+                t.equal(app(), 'foobar');
                 t.end();
             });
         });
