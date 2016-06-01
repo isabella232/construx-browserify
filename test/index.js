@@ -25,7 +25,6 @@ var fs = require('fs'),
     context = {
         name: '/js/app',
         srcRoot: path.resolve(__dirname, 'fixtures/'),
-        filePath: '/js/app.js',
         ext: 'js'
     },
     ConstruxBrowserify = require(path.resolve(__dirname, '..'));
@@ -71,12 +70,18 @@ test('construx-browserify', function (t) {
      * Makes sure that the wrapper correctly uses the "bundles" map
      */
     t.test('Correctly handles "bundles" config map', function (t) {
+        var context = {
+            name: '/js/foo',
+            srcRoot: path.resolve(__dirname, 'fixtures/'),
+            filePath: '/js/foo.js',
+            ext: 'js'
+        };
         t.plan(1);
 
         fs.readFile(path.resolve(__dirname, 'fixtures/js/app.js'), function (err, data) {
             var options = {
                 bundles: {
-                    '/js/app.js': {
+                    '/js/foo.js': {
                         src: path.resolve(__dirname, 'fixtures/js/app.js')
                     }
                 }
