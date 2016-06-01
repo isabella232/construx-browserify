@@ -66,5 +66,35 @@ test('construx-browserify', function (t) {
         });
     });
 
+    /**
+     * Makes sure that the wrapper correctly uses the "bundles" map
+     */
+    t.test('Correctly handles "bundles" config map', function (t) {
+        var context = {
+            name: '/js/foo',
+            srcRoot: path.resolve(__dirname, 'fixtures/'),
+            filePath: '/js/foo.js',
+            ext: 'js'
+        };
+        t.plan(1);
+
+        fs.readFile(path.resolve(__dirname, 'fixtures/js/app.js'), function (err, data) {
+            var options = {
+                bundles: {
+                    '/js/foo.js': {
+                        src: path.resolve(__dirname, 'fixtures/js/app.js')
+                    }
+                }
+            };
+            var construxBrowserify = ConstruxBrowserify(options); //Append sourcemap as a test option.
+
+            construxBrowserify(data, {paths: '', context: context}, function (err, compiled) {
+                var app = eval(compiled)(1); //Eval entry point (app.js)
+                t.equal(app(), 'foobar');
+                t.end();
+            });
+        });
+    });
+
     t.end()
 });

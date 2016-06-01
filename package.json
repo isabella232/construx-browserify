@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lmarkus/construx-browserify.git"
+    "url": "git+https://github.com/krakenjs/construx-browserify.git"
   },
   "keywords": [
     "krakenjs",
@@ -19,6 +19,7 @@
     "browserify"
   ],
   "author": "@lennyMarkus",
+  "contributors": ["Matt Edelman <mattedelman@gmail.com>"],
   "license": [
     {
       "type": "Apache 2.0",
@@ -26,9 +27,9 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/lmarkus/construx-browserify/issues"
+    "url": "https://github.com/krakenjs/construx-browserify/issues"
   },
-  "homepage": "https://github.com/lmarkus/construx-browserify#readme",
+  "homepage": "https://github.com/krakenjs/construx-browserify#readme",
   "devDependencies": {
     "jshint": "~2.4.3",
     "nyc": "^2.3.0",
