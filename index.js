@@ -22,7 +22,10 @@ var path = require('path'),
 module.exports = function (options) {
 
     options.ext = options.ext || 'js';
-
+    options.precompile = function (options, cb) {
+        options.skipRead = true;
+        cb(null, options);
+    };
     /**
      * Middleware that will process the request.
      * See https://github.com/krakenjs/construx#middleware-process-a-matched-request
