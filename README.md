@@ -1,7 +1,5 @@
 # construx-browserify
 
-Lead Maintainer: [Matt Edelman](https://github.com/grawk)
-
 [![Build Status](https://travis-ci.org/lmarkus/construx-browserify.svg?branch=master)](https://travis-ci.org/lmarkus/construx-browserify)
 [![NPM version](https://badge.fury.io/js/construx-browserify.png)](http://badge.fury.io/js/construx-browserify)
 
@@ -32,7 +30,7 @@ Where you configure your construx plugins:
 }
 ```
 
-Alternatively, if you have a situation where a request (`/bundle.js`) may actually need to map to some other entry point (`/main.js`), 
+Alternatively, if you have a situation where a request (`/bundle.js`) may actually need to map to some other entry point (`/main.js`),
 you can specify a "bundles" map as below:
 
 ```json
@@ -55,4 +53,3 @@ you can specify a "bundles" map as below:
 IF you specify a "bundles" map, then you **MUST** add an entry for any file you wish to transform.
 
 _Note: See [construx README](https://github.com/krakenjs/construx/blob/master/README.md) for general usage of construx_
-
